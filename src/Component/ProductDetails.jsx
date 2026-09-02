@@ -1,15 +1,19 @@
-import { useContext } from "react";
+
 import { useParams } from "react-router-dom";
 import products from "../data/products";
-import CartContext from "../ContextApi/CartContext";
+import useCartStore from "../store/cartStore";
 
 const ProductDetails = () => {
-  const { addToCart } = useContext(CartContext);
+
   const { id } = useParams();
 
-  const product = products.find((item) => {
-    return item.id === Number(id);
-  });
+  const addToCart = useCartStore(
+    (state) => state.addToCart
+  );
+
+  const product = products.find(
+    (item) => item.id === Number(id)
+  );
 
   if (!product) {
     return <h1>Product nahi mila</h1>;
@@ -18,15 +22,28 @@ const ProductDetails = () => {
   return (
     <>
       <div className="product-details-page">
+
         <div className="product-details-container">
+
           <div className="product-details-image">
-            <img src={product.image} alt={product.name} />
+            <img
+              src={product.image}
+              alt={product.name}
+            />
           </div>
 
           <div className="product-details-info">
-            <p className="product-category">{product.category}</p>
+
+            <p className="product-category">
+              {product.category}
+            </p>
+
             <h1>{product.name}</h1>
-            <p className="product-details-price">Rs. {product.price}</p>
+
+            <p className="product-details-price">
+              Rs. {product.price}
+            </p>
+
             <p className="product-description">
               This is a high-quality product available at
               Personal Store. Get the best quality at the best price.
@@ -38,11 +55,15 @@ const ProductDetails = () => {
             >
               Add to Cart
             </button>
+
           </div>
+
         </div>
+
       </div>
     </>
   );
 };
 
 export default ProductDetails;
+

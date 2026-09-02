@@ -1,17 +1,22 @@
 
-import { useContext } from "react";
-import CartContext from "../ContextApi/CartContext";
+import useCartStore from "../store/cartStore";
 
 const Cart = () => {
 
-  const {
-    cart,
-    increaseQuantity,
-    decreaseQuantity,
-    removeFromCart
-  } = useContext(CartContext);
+  const cart = useCartStore((state) => state.cart);
 
-  // Cart ka total amount calculate karna
+  const increaseQuantity = useCartStore(
+    (state) => state.increaseQuantity
+  );
+
+  const decreaseQuantity = useCartStore(
+    (state) => state.decreaseQuantity
+  );
+
+  const removeFromCart = useCartStore(
+    (state) => state.removeFromCart
+  );
+
   const totalAmount = cart.reduce(
     (total, product) =>
       total + product.price * product.quantity,
@@ -33,7 +38,10 @@ const Cart = () => {
 
           {cart.map((product) => (
 
-            <div className="cart-item" key={product.id}>
+            <div
+              className="cart-item"
+              key={product.id}
+            >
 
               <img
                 src={product.image}
@@ -84,9 +92,10 @@ const Cart = () => {
 
           ))}
 
-          {/* Total Amount */}
           <div className="cart-total">
-            <h2>Total Amount: Rs. {totalAmount}</h2>
+            <h2>
+              Total Amount: Rs. {totalAmount}
+            </h2>
           </div>
 
         </div>
@@ -98,3 +107,4 @@ const Cart = () => {
 };
 
 export default Cart;
+

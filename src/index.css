@@ -1411,3 +1411,27 @@ body.dark-mode .about-content li::before {
 .cart-total h2 {
   font-size: 24px;
 }
+
+body.dark-mode {
+  background-color: #111;
+  color: white;
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode p {
+  color: white;
+}
+
+body.dark-mode .cart-item {
+  color: black;
+}
+
+body.dark-mode .cart-total h2 {
+  color: white;
+}
+body.dark-mode .cart-item h2,
+body.dark-mode .cart-item p {
+  color: black;
+}

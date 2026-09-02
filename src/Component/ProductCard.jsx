@@ -1,10 +1,9 @@
-import { useContext } from "react";
 import { Link } from "react-router-dom";
-import CartContext from "../ContextApi/CartContext";
+import useCartStore from "../store/cartStore";
 
 const ProductCard = ({ product }) => {
 
-  const { addToCart } = useContext(CartContext);
+  const  addToCart  = useCartStore((state) => state.addToCart);
 
   return (
     <div className="product-card">

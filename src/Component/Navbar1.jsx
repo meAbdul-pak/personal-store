@@ -1,48 +1,53 @@
-import { useContext, useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import CartContext from '../ContextApi/CartContext'
+import { Link } from "react-router-dom";
+import useThemeStore from "../store/themeStore";
+import useCartStore from "../store/cartStore";
+import { useEffect } from "react";
 
 const Navbar1 = () => {
-  const { cartCount } = useContext(CartContext)
+  const cartCount = useCartStore((state) =>
+    state.cart.reduce(
+      (total, item) => total + item.quantity,
+      0
+    )
+  );
 
-  // Page load hote hi localStorage se dark mode check karo
-  const [darkMode, setDarkMode] = useState(() => {
-    const savedTheme = localStorage.getItem("darkMode")
-    return savedTheme === "true"
-  })
+  const darkMode = useThemeStore((state) => state.darkMode);
+  const toggleDarkMode = useThemeStore(
+    (state) => state.toggleDarkMode
+  );
 
   useEffect(() => {
-    document.body.classList.toggle('dark-mode', darkMode)
-    // Jab bhi darkMode change ho, localStorage mein save kar do
-    localStorage.setItem("darkMode", darkMode)
-  }, [darkMode])
+    document.body.classList.toggle("dark-mode" , darkMode);
+  },[darkMode]);
 
   return (
-    <nav className='navbar'>
+    <nav className="navbar">
       <h2>
-        <Link to='/'>Personal Store</Link>
+        <Link to="/">Personal Store</Link>
       </h2>
 
-      <div className='nav-links'>
-        <Link to='/'>Home</Link>
+      <div className="nav-links">
+        <Link to="/">Home</Link>
+        <Link to="/products">Products</Link>
+        <Link to="/about">About</Link>
+        <Link to="/contact">Contact Us</Link>
 
-        <Link to='/products'>Products</Link>
-
-        <Link to='/about'>About</Link>
-
-        <Link to='/contact'>Contact Us</Link>
-
-        <Link to='/cart' className='cart-link'>
+        <Link to="/cart" className="cart-link">
           🛒
-          {cartCount > 0 && <span className='cart-badge'>{cartCount}</span>}
+          {cartCount > 0 && (
+            <span className="cart-badge">{cartCount}</span>
+          )}
         </Link>
 
-        <button className='theme-toggle' onClick={() => setDarkMode(!darkMode)}>
-          {darkMode ? '☀️ Light' : '🌙 Dark'}
+        <button
+          className="theme-toggle"
+          onClick={toggleDarkMode}
+        >
+          {darkMode ? "☀️ Light" : "🌙 Dark"}
         </button>
       </div>
     </nav>
-  )
-}
+  );
+};
 
-export default Navbar1
+export default Navbar1;
